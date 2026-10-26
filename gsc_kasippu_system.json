@@ -1,0 +1,8 @@
+{
+    "version": "1.5.0",
+    "changelog": [
+        "Recipe cards can be read from the satchel",
+        "Guard revamp: guards hold their posts, yards stay staffed",
+        "Every admin command is now checked on the server"
+    ]
+}
