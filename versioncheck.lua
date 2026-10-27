@@ -1,13 +1,24 @@
----o[ GSC version check - the same file in every script, nothing to edit here ]o---
--- fxmanifest.lua:  version '1.5.0'
---                  gsc_version_id 'gsc_kasippu_system'   -- <id>.json in 0nexo0/CronicalVerse-Versions
--- Off: Config.VersionCheck = false (this script) · set gsc_versioncheck false (server.cfg, every script)
+---o[ CronicalVerse version check - the same file in every script, nothing to edit here ]o---
+-- Add to a script:
+--   1. Copy this file to <script>/cv_core/server/version.lua
+--   2. fxmanifest.lua:  server_scripts { 'cv_core/server/version.lua', ... }
+--                       version       '1.0.0'
+--                       cv_version_id 'my_script'   -- reads my_script.json from 0nexo0/CronicalVerse-Versions
+--   3. CronicalVerse-Versions: copy _template.json to my_script.json, commit, push
+-- Off: Config.VersionCheck = false (one script) · set cv_versioncheck false (server.cfg, every script)
 
 local VERSIONS_URL = "https://raw.githubusercontent.com/0nexo0/CronicalVerse-Versions/main/%s.json"
 
 local resource = GetCurrentResourceName()
-local scriptId = GetResourceMetadata(resource, 'gsc_version_id', 0) or resource
-local current  = GetResourceMetadata(resource, 'version', 0) or "0.0.0"
+
+---o[ A key from this script's fxmanifest.lua, or nil when it is missing or empty ]o---
+local function Meta(key)
+    local value = GetResourceMetadata(resource, key, 0)
+    if value ~= nil and value ~= "" then return value end
+end
+
+local scriptId = Meta('cv_version_id')
+local current  = Meta('version')
 
 ---o[ "1.4.0" -> { 1, 4, 0 } ]o---
 local function Parts(v)
@@ -31,9 +42,19 @@ local function Line(text)
 end
 
 Citizen.CreateThread(function()
-    if GetConvar('gsc_versioncheck', 'true') == 'false' then return end
+    if GetConvar('cv_versioncheck', 'true') == 'false' then return end
     if type(Config) == 'table' and Config.VersionCheck == false then return end
     Wait(3000) -- after the start-up spam, so the box is easy to see
+
+    ---o[ Missing fxmanifest keys: say so, then fall back ]o---
+    if not scriptId then
+        scriptId = resource
+        Line("^3cv_version_id is missing in fxmanifest.lua - using the folder name (" .. resource .. ")")
+    end
+    if not current then
+        current = "0.0.0"
+        Line("^3version is missing in fxmanifest.lua - treating it as 0.0.0")
+    end
 
     PerformHttpRequest(VERSIONS_URL:format(scriptId), function(status, body)
         local ok, latest = pcall(json.decode, body or "")
