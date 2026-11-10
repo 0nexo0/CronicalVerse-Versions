@@ -1,8 +1,9 @@
 {
-    "version": "1.5.0",
+    "version": "1.5.1",
     "changelog": [
-        "Recipe cards can be read from the satchel",
-        "Guard revamp: guards hold their posts, yards stay staffed",
-        "Every admin command is now checked on the server"
+        "Added New Notify System",
+        "Added New Minigames",
+        "Improved Performance",
+        "Fixed Bugs"
     ]
 }
