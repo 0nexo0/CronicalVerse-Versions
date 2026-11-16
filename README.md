@@ -15,13 +15,13 @@ This repo must stay **public**. It holds no script code: only version numbers, t
 
 | Script (folder) | `cv_version_id` | JSON here |
 |---|---|---|
-| `cv_kasippu_system` | `gsc_kasippu_system` | `gsc_kasippu_system.json` |
+| `cv_kasippu_system` | `cv_kasippu_system` | `cv_kasippu_system.json` |
 | `cv_farming_system` | `cv_farming_system` | `cv_farming_system.json` |
 | `cv_horse_siren` | — | `cv_horse_siren.json` |
 | `cv_megaphone` | — | `cv_megaphone.json` |
 | `gsc_wild_horse` | — | `gsc_wild_horse.json` |
 
-`cv_kasippu_system` keeps the old id on purpose: servers still on 1.5.x read the same file.
+`gsc_kasippu_system.json` stays for servers still on 1.5.x (`gsc_version_id 'gsc_kasippu_system'`). On a kasippu release, update **both** `cv_kasippu_system.json` and `gsc_kasippu_system.json` so old servers also see the update.
 
 ## A script's JSON
 
@@ -69,7 +69,7 @@ Do step 3 last. Pushing here tells every server to update.
 
 Builds released before the rename (`gsc_kasippu_system` 1.5.x) still read `gsc_version_id` and `gsc_versioncheck`. Their JSON here keeps working as it is.
 
-`cv_kasippu_system` 1.6.0 has moved: `cv_version_id 'gsc_kasippu_system'` in `fxmanifest.lua`, and `cv_core/server/version.lua` is `versioncheck.lua`. Any other script still on the gsc_ names moves the same way on its next release.
+`cv_kasippu_system` 1.6.0 has moved: `cv_version_id 'cv_kasippu_system'` in `fxmanifest.lua`, and `cv_core/server/version.lua` is `versioncheck.lua`. Any other script still on the gsc_ names moves the same way on its next release.
 
 While servers still run 1.5.x builds, turning every check off needs both lines in `server.cfg`:
 

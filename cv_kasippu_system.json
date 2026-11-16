@@ -1,0 +1,11 @@
+{
+    "version": "1.6.0",
+    "changelog": [
+        "New: Kasippu radial menu (F6) - every action where you stand",
+        "New version check - set cv_versioncheck false to turn it off",
+        "Placement notes now use VORP's objective note",
+        "Fixed: Fill Water Barrel could be spammed or cancelled and still keep the water",
+        "Fixed: a new note waited behind the last one in the game feed"
+    ],
+    "url": "https://keymaster.fivem.net"
+}
